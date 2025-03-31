@@ -15,13 +15,13 @@ export class CommunityService {
         stats: {
           memberCount: 0,
           postCount: 0,
-          activeMembers: 0
+          activeMembers: 0,
+          lastActive: now
         },
         settings: {
           isPrivate: false,
           requiresApproval: false,
           allowPosts: true,
-          allowEvents: true,
           allowPolls: true,
           ...input.settings
         },

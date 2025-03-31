@@ -5,7 +5,6 @@ export interface ClassroomSettings {
   allowStudentComments: boolean;
   isArchived: boolean;
   notifications: {
-    assignments: boolean;
     materials: boolean;
     announcements: boolean;
   };
@@ -22,38 +21,17 @@ export interface Classroom extends CouchDBDocument {
     avatar?: string;
   };
   students: ClassroomStudent[];
-  assignments: Assignment[];
   materials: Material[];
-  schedule: ScheduleEvent[];
   settings: ClassroomSettings;
-}
-
-export interface Assignment {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-  points: number;
-  attachments?: {
-    id: string;
-    name: string;
-    url: string;
-    type: string;
-  }[];
-  submissions: AssignmentSubmission[];
-}
-
-export interface AssignmentSubmission {
-  studentId: string;
-  submittedAt: string;
-  files: {
-    id: string;
-    name: string;
-    url: string;
-    type: string;
-  }[];
-  grade?: number;
-  feedback?: string;
+  chatRoomId?: string; // Reference to the associated chat room
+  thumbnail?: string; // For group browsing display
+  category?: string; // For group browsing categorization
+  tags: string[]; // For searchability
+  stats: {
+    studentCount: number;
+    activeStudents: number;
+    lastActive: string;
+  };
 }
 
 export interface Material {
@@ -66,17 +44,6 @@ export interface Material {
   tags: string[];
 }
 
-export interface ScheduleEvent {
-  id: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  recurring?: {
-    frequency: 'daily' | 'weekly';
-    days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[];
-  };
-}
-
 export interface CreateClassroom {
   type: 'classroom';
   name: string;
@@ -86,6 +53,9 @@ export interface CreateClassroom {
     name: string;
     avatar?: string;
   };
+  tags?: string[];
+  thumbnail?: string;
+  category?: string;
 }
 
 export interface UpdateClassroomInput {
@@ -94,35 +64,12 @@ export interface UpdateClassroomInput {
   settings?: Partial<ClassroomSettings>;
 }
 
-export interface CreateAssignment {
-  title: string;
-  description: string;
-  dueDate: string;
-  points: number;
-  attachments?: {
-    id: string;
-    name: string;
-    url: string;
-    type: string;
-  }[];
-}
-
 export interface CreateMaterial {
   title: string;
   description: string;
   type: 'document' | 'video' | 'link' | 'other';
   url: string;
   tags: string[];
-}
-
-export interface CreateScheduleEvent {
-  title: string;
-  startTime: string;
-  endTime: string;
-  recurring?: {
-    frequency: 'daily' | 'weekly';
-    days: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun')[];
-  };
 }
 
 export interface ClassroomStudent {

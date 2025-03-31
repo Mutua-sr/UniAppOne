@@ -12,7 +12,6 @@ export class ClassroomService {
         allowStudentComments: true,
         isArchived: false,
         notifications: {
-          assignments: true,
           materials: true,
           announcements: true
         }
@@ -23,10 +22,14 @@ export class ClassroomService {
         type: this.TYPE,
         code: Math.random().toString(36).substring(7).toUpperCase(),
         students: [],
-        assignments: [],
         materials: [],
-        schedule: [],
-        settings: defaultSettings
+        settings: defaultSettings,
+        tags: input.tags || [],
+        stats: {
+          studentCount: 0,
+          activeStudents: 0,
+          lastActive: new Date().toISOString()
+        }
       };
 
       return await DatabaseService.create<Classroom>(classroom);

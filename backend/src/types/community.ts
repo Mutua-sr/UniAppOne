@@ -22,15 +22,18 @@ export interface Community extends CouchDBDocument {
     isPrivate: boolean;
     requiresApproval: boolean;
     allowPosts: boolean;
-    allowEvents: boolean;
     allowPolls: boolean;
   };
   stats: {
     memberCount: number;
     postCount: number;
     activeMembers: number;
+    lastActive: string;
   };
   tags: string[];
+  chatRoomId?: string;
+  category?: string;
+  thumbnail?: string;
 }
 
 export interface CreateCommunity {
@@ -48,7 +51,6 @@ export interface CreateCommunity {
     isPrivate?: boolean;
     requiresApproval?: boolean;
     allowPosts?: boolean;
-    allowEvents?: boolean;
     allowPolls?: boolean;
   };
   tags?: string[];
@@ -63,7 +65,6 @@ export interface UpdateCommunity {
     isPrivate?: boolean;
     requiresApproval?: boolean;
     allowPosts?: boolean;
-    allowEvents?: boolean;
     allowPolls?: boolean;
   };
   tags?: string[];
